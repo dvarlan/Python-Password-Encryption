@@ -10,13 +10,15 @@ import getpass
 salzstreuer = b'\xd5\xbd\xd7E\xc0R\xba3\xb0|\xcb\xf1\xd9\x9a\x07=\x81;1\xc1\xb3M\xdeN[k\xef|\x88A\xf5\xc5'
 
 
-# The "encrypt" and "decrypt" functions are from this tutorial:
+# The "encrypt" and "decrypt" functions are inspired by this tutorial:
 # https://www.geeksforgeeks.org/encrypt-and-decrypt-files-using-python/
 
 def decrypt(user_key):
     """
+    Uses the user generated "user_key" to decrypt the "vault.txt" file and prints the file content
 
-    :param user_key:
+    Parameter(s):
+        user_key (Bytes): The key generated from the user input / password
     """
     fernet = Fernet(user_key)
 
@@ -33,6 +35,12 @@ def decrypt(user_key):
 
 
 def encrypt(user_key):
+    """
+    Uses the user generated "user_key" to encrypt the "vault.txt" file and prints the file content
+
+    Parameter(s):
+        user_key (Bytes): The key generated from the user input / password
+    """
     fernet = Fernet(user_key)
 
     with open("vault.txt", "rb") as file:
@@ -73,6 +81,14 @@ def create_key():
 
 
 def check_key(user_key):
+    """
+    Asks the user to repeat his password and generates a key from that new password.
+    Checks if the key generated from the new password matches the one from the first password (user_key)
+    If the keys are the same calls "decrypt()"
+
+    Parameter(s):
+        user_key (Bytes): The key generated from the first user input / password
+    """
     password = getpass.getpass(prompt="Enter your Password to unlock the vault: ")
     password = password.encode()
 
